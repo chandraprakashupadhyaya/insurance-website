@@ -11,13 +11,18 @@ function redirectToWhatsApp(event) {
     return;
   }
 
-  // Ensure phone has country code
-  const fullPhone = phone.startsWith("+") ? phone : `+91${phone}`;
+  // Always send to your WhatsApp number
+  const whatsappNumber = "917569552274";
+
+  // WhatsApp message format
+  const text =
+    `New Lead from Website:%0A` +
+    `Name: ${name}%0A` +
+    `Phone: ${phone}%0A` +
+    `Message: ${message}`;
 
   // WhatsApp link
-  const url = `https://wa.me/${fullPhone}?text=${encodeURIComponent(
-    `Hello, my name is ${name}.\n\n${message}`
-  )}`;
+  const url = `https://wa.me/${whatsappNumber}?text=${text}`;
 
   // Open WhatsApp
   window.open(url, "_blank");
