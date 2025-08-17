@@ -223,6 +223,7 @@ textarea{min-height:140px;}
   .hero{grid-template-columns:1fr;}
   .hero div{text-align:center;}
 }
+
 @media (max-width:700px){
   .menu{
     display:none;
@@ -239,8 +240,12 @@ textarea{min-height:140px;}
   .menu.open{display:flex;}
   .hamburger{display:inline-block;}
 }
+
 @media(max-width:600px){
   .grid-3{grid-template-columns:1fr;}
+  .grid-2{grid-template-columns:1fr;}   /* ✅ form + icons stack vertically */
+  form{margin-bottom:2rem;}             /* ✅ adds space before icons */
+  .social-icons{justify-content:center;} /* ✅ center icons neatly */
 }
 
 /* 🔹 Social Icons */
@@ -262,7 +267,7 @@ textarea{min-height:140px;}
   position:absolute;
   width:80px;
   height:80px;
-  background:white;
+  background:white; 
   border-radius:50%;
   transform:scale(0);
   transition:transform .3s ease;
