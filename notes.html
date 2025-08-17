@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Insurance Course</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 0; 
+      padding: 0; 
+      background: #f4f6f9; 
+      color: #333;
+    }
+    header { 
+      background: linear-gradient(135deg, #007bff, #6610f2); 
+      color: #fff; 
+      padding: 25px; 
+      text-align: center; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    h1 { margin: 0; font-size: 28px; }
+
+    .course-container { 
+      max-width: 1000px; 
+      margin: 30px auto; 
+      padding: 0 20px; 
+    }
+
+    .course-item { 
+      background: #fff; 
+      border-radius: 10px; 
+      margin-bottom: 20px; 
+      box-shadow: 0 5px 12px rgba(0,0,0,0.1); 
+      overflow: hidden; 
+      transition: transform 0.2s;
+    }
+    .course-item:hover { transform: translateY(-3px); }
+
+    .course-title { 
+      background: #007bff; 
+      color: #fff; 
+      padding: 18px; 
+      font-size: 20px; 
+      font-weight: bold; 
+      cursor: pointer; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      transition: background 0.3s;
+    }
+    .course-title:hover { background: #0056b3; }
+    .course-title span { font-size: 22px; }
+
+    .course-content { 
+      display: none; 
+      padding: 20px; 
+      background: #fdfdfd; 
+    }
+
+    /* Search */
+    .course-search { margin-bottom: 15px; }
+    .course-search input { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid #ccc; 
+      border-radius: 8px; 
+      font-size: 15px; 
+    }
+
+    /* PDF Grid */
+    .pdf-grid { 
+      display: grid; 
+      grid-template-columns: 1fr 1fr; 
+      gap: 20px; 
+    }
+    .pdf-item { 
+      background: #fff; 
+      border-radius: 10px; 
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1); 
+      overflow: hidden; 
+      transition: transform 0.2s;
+    }
+    .pdf-item:hover { transform: scale(1.02); }
+
+    .pdf-title { 
+      background: #28a745; 
+      color: #fff; 
+      padding: 12px; 
+      font-size: 16px; 
+      cursor: pointer; 
+      font-weight: bold; 
+      text-align: center; 
+      transition: background 0.3s;
+    }
+    .pdf-title:hover { background: #1e7e34; }
+
+    iframe { 
+      width: 100%; 
+      height: 400px; 
+      border: none; 
+      display: none; 
+    }
+
+    @media(max-width: 768px) {
+      .pdf-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📘 Life Insurance Course Library</h1>
+  </header>
+
+  <div class="course-container">
+
+    <!-- Life Insurance Course -->
+    <div class="course-item">
+      <div class="course-title" onclick="toggleCourse(this)">Life Insurance Basics <span>+</span></div>
+      <div class="course-content">
+        
+        <!-- Search -->
+        <div class="course-search">
+          <input type="text" placeholder="Search inside Life Insurance..." onkeyup="searchInCourse(this)">
+        </div>
+
+        <div class="pdf-grid">
+          <div class="pdf-item">
+            <div class="pdf-title" onclick="togglePDF(this, '1. INTRODUCTION TO LIFE INSURANCE.pdf')">1. Introduction to Life Insurance</div>
+            <iframe></iframe>
+          </div>
+          <div class="pdf-item">
+            <div class="pdf-title" onclick="togglePDF(this, '2. Different_Types_of_Life_Insurance_Policies.pdf')">2. Different Types of Life Insurance Policies</div>
+            <iframe></iframe>
+          </div>
+          <div class="pdf-item">
+            <div class="pdf-title" onclick="togglePDF(this, '3. LIFE_INSURANCE_CONTRACTS.pdf')">3. Life Insurance Contracts</div>
+            <iframe></iframe>
+          </div>
+          <div class="pdf-item">
+            <div class="pdf-title" onclick="togglePDF(this, '4. PREMIUMS_AND_CLAIMS.pdf')">4. Premiums & Claims</div>
+            <iframe></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Expand/Collapse Course
+    function toggleCourse(titleDiv) {
+      let content = titleDiv.nextElementSibling;
+      let symbol = titleDiv.querySelector("span");
+      if (content.style.display === "block") {
+        content.style.display = "none";
+        symbol.textContent = "+";
+      } else {
+        content.style.display = "block";
+        symbol.textContent = "−";
+      }
+    }
+
+    // Toggle PDF
+    function togglePDF(titleDiv, pdfFile) {
+      let iframe = titleDiv.nextElementSibling;
+      if (iframe.style.display === "block") {
+        iframe.style.display = "none";
+        iframe.src = "";
+      } else {
+        iframe.style.display = "block";
+        iframe.src = pdfFile;
+      }
+    }
+
+    // Search inside one course
+    function searchInCourse(input) {
+      let filter = input.value.toLowerCase();
+      let courseContent = input.closest(".course-content");
+      let items = courseContent.querySelectorAll(".pdf-item");
+
+      items.forEach(item => {
+        let title = item.querySelector(".pdf-title").innerText.toLowerCase();
+        item.style.display = title.includes(filter) ? "block" : "none";
+      });
+    }
+  </script>
+</body>
+</html>
