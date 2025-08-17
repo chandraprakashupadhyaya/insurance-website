@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Course Videos</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #1e293b;
+      --accent: #38bdf8;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --radius: 18px;
+      --shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--card);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow);
+      z-index: 10;
+    }
+    header h1 {
+      font-size: 1.4rem;
+      color: var(--accent);
+    }
+
+    .container {
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .video-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+
+    .video-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.35);
+    }
+
+    video {
+      width: 100%;
+      display: block;
+      border-bottom: 2px solid var(--accent);
+    }
+
+    .info {
+      padding: 1rem;
+    }
+
+    .info h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      color: var(--accent);
+    }
+
+    .info p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background: var(--card);
+      margin-top: 2rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎥 My Course Videos</h1>
+  </header>
+
+  <main class="container">
+    <div class="video-card">
+      <video controls poster="thumbnail1.jpg">
+        <source src="video1.mp4" type="video/mp4">
+        Your browser does not support HTML video.
+      </video>
+      <div class="info">
+        <h3>Introduction to Course</h3>
+        <p>Start your journey here.</p>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <video controls poster="thumbnail2.jpg">
+        <source src="video2.mp4" type="video/mp4">
+      </video>
+      <div class="info">
+        <h3>Lesson 1: Basics</h3>
+        <p>Understand the fundamentals clearly.</p>
+      </div>
+    </div>
+
+    <div class="video-card">
+      <video controls poster="thumbnail3.jpg">
+        <source src="video3.mp4" type="video/mp4">
+      </video>
+      <div class="info">
+        <h3>Lesson 2: Advanced Concepts</h3>
+        <p>Dive deeper into advanced topics.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2025 My Course. All rights reserved.
+  </footer>
+
+  <script>
+    // Smooth load animations
+    document.addEventListener("DOMContentLoaded", () => {
+      const cards = document.querySelectorAll(".video-card");
+      cards.forEach((card, i) => {
+        card.style.opacity = "0";
+        card.style.transform = "translateY(30px)";
+        setTimeout(() => {
+          card.style.transition = "all 0.6s ease";
+          card.style.opacity = "1";
+          card.style.transform = "translateY(0)";
+        }, i * 200);
+      });
+    });
+  </script>
+</body>
+</html>
