@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
@@ -17,7 +17,7 @@
       </a>
       <button class="hamburger" onclick="document.querySelector('.menu').classList.toggle('open')">☰</button>
       <div class="menu">
-        <a href="#home">Home</a>   <!-- ✅ Home button added -->
+        <a href="#home">Home</a>
         <a href="#about">About</a>
         <a href="#services">Services</a>
         <a href="#contact">Contact</a>
@@ -34,7 +34,6 @@
       <div class="actions">
         <a class="btn primary" href="#contact">Join Now</a>
         <a class="btn" href="https://wa.me/917569552274" target="_blank">Chat on WhatsApp</a> <br>
-        <!-- ✅ New Buttons Added Below --> 
         <a class="btn" href="notes.html" target="_blank">Courses & Notes</a>
         <a class="btn" href="videos.html" target="_blank">Videos</a>
       </div>
@@ -62,74 +61,74 @@
   </section>
 
   <!-- Services -->
-<section id="services" class="section container">
-  <h2>How I Help</h2>
-  <div class="grid">
-    <div class="card feature"><h3>Guidance</h3><p class="muted">One-to-one mentoring and proper career advice for agents.</p></div>
-    <div class="card feature"><h3>Growth</h3><p class="muted">Support to achieve targets, incentives, and promotions.</p></div>
-    <div class="card feature"><h3>Opportunities</h3><p class="muted">Helping new agents start their journey in insurance sector.</p></div>
-    <div class="card feature"><h3>Training</h3><p class="muted">Skill development sessions to build strong confidence.</p></div>
-    <div class="card feature"><h3>Networking</h3><p class="muted">Connect with like-minded professionals for better opportunities.</p></div>
-    <div class="card feature"><h3>Rewards</h3><p class="muted">Attractive rewards & recognition for high achievers.</p></div>
-  </div>
-</section>
+  <section id="services" class="section container">
+    <h2>How I Help</h2>
+    <div class="grid">
+      <div class="card feature"><h3>Guidance</h3><p class="muted">One-to-one mentoring and proper career advice for agents.</p></div>
+      <div class="card feature"><h3>Growth</h3><p class="muted">Support to achieve targets, incentives, and promotions.</p></div>
+      <div class="card feature"><h3>Opportunities</h3><p class="muted">Helping new agents start their journey in insurance sector.</p></div>
+      <div class="card feature"><h3>Training</h3><p class="muted">Skill development sessions to build strong confidence.</p></div>
+      <div class="card feature"><h3>Networking</h3><p class="muted">Connect with like-minded professionals for better opportunities.</p></div>
+      <div class="card feature"><h3>Rewards</h3><p class="muted">Attractive rewards & recognition for high achievers.</p></div>
+    </div>
+  </section>
+
   <!-- Contact -->
   <section id="contact" class="section container">
-  <h2 class="contact-title">📞 Get in Touch</h2>
-  <div class="grid grid-2 contact-grid">
-    
-    <!-- WhatsApp Form -->
-    <div class="card contact-card">
-      <h3 class="form-title">Send a Message</h3>
-      <form id="whatsappForm" onsubmit="redirectToWhatsApp(event)">
-        <div class="form-group">
-          <input type="text" name="name" id="name" required placeholder=" " />
-          <label for="name">Your Name</label>
-        </div>
-        <div class="form-group">
-          <input type="tel" name="phone" id="phone" required pattern="[0-9]{10,}" placeholder=" " />
-          <label for="phone">WhatsApp Number</label>
-        </div>
-        <div class="form-group">
-          <textarea name="message" id="message" required placeholder=" "></textarea>
-          <label for="message">Your Message</label>
-        </div>
-        <button class="btn primary send-btn" type="submit">🚀 Send on WhatsApp</button>
-        <p class="notice">This form will open WhatsApp with your details.</p>
-      </form>
-    </div>
-
-    <!-- Contact Info -->
-    <div class="card contact-info">
-      <h3>📌 Contact Info</h3>
-      <p class="muted">
-        📱 Phone: <a href="tel:+917569552274">+91 75695 52274</a><br/>
-        📧 Email: <a href="mailto:chandraprakash16112k2@gmail.com">chandraprakash16112k2@gmail.com</a>
-      </p>
-      <h3>🌍 Follow Me</h3>
-      <div class="social-icons">
-        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://www.linkedin.com/in/chandra-prakash-upadhyaya-40078b268/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-        <a href="https://instagram.com/the_real_opportunity_provider" target="_blank"><i class="fab fa-instagram"></i></a>
+    <h2 class="contact-title">📞 Get in Touch</h2>
+    <div class="grid grid-2 contact-grid">
+      
+      <!-- WhatsApp Form -->
+      <div class="card contact-card">
+        <h3 class="form-title">Send a Message</h3>
+        <form id="whatsappForm" onsubmit="redirectToWhatsApp(event)">
+          <div class="form-group">
+            <input type="text" name="name" id="name" required placeholder=" " />
+            <label for="name">Your Name</label>
+          </div>
+          <div class="form-group">
+            <input type="tel" name="phone" id="phone" required pattern="[0-9]{10,}" placeholder=" " />
+            <label for="phone">WhatsApp Number</label>
+          </div>
+          <div class="form-group">
+            <textarea name="message" id="message" required placeholder=" "></textarea>
+            <label for="message">Your Message</label>
+          </div>
+          <button class="btn primary send-btn" type="submit">🚀 Send on WhatsApp</button>
+          <p class="notice">This form will open WhatsApp with your details.</p>
+        </form>
       </div>
+
+      <!-- Contact Info -->
+      <div class="card contact-info">
+        <h3>📌 Contact Info</h3>
+        <p class="muted">
+          📱 Phone: <a href="tel:+917569552274">+91 75695 52274</a><br/>
+          📧 Email: <a href="mailto:chandraprakash16112k2@gmail.com">chandraprakash16112k2@gmail.com</a>
+        </p>
+        <h3>🌍 Follow Me</h3>
+        <div class="social-icons">
+          <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.linkedin.com/in/chandra-prakash-upadhyaya-40078b268/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://instagram.com/the_real_opportunity_provider" target="_blank"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+
     </div>
-
-  </div>
-</section>
-
+  </section>
 
   <footer class="footer">
-  <div class="container footer-content">
-    <div class="footer-left">
-      <p>© <span id="year"></span> <strong>Chandra Prakash Upadhyaya</strong>. All rights reserved.</p>
-      <p class="tagline">Made with <span class="heart">♥</span> to guide & create opportunities.</p>
+    <div class="container footer-content">
+      <div class="footer-left">
+        <p>© <span id="year"></span> <strong>Chandra Prakash Upadhyaya</strong>. All rights reserved.</p>
+        <p class="tagline">Made with <span class="heart">♥</span> to guide & create opportunities.</p>
+      </div>
     </div>
-  </div>
-</footer>
-
+  </footer>
 
   <a href="https://wa.me/917569552274" class="whatsapp-btn" target="_blank">WhatsApp Me</a>
 
+  <!-- External JS -->
   <script src="script.js"></script>
 </body>
 </html>
