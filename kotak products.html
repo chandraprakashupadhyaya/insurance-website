@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Kotak Insurance PDF Library</title>
+  <meta name="theme-color" content="#ff5722"/>
+  <style>
+    /* ---------- Theme vars (edit to brand) ---------- */
+    :root{
+      --bg:#f4f6fb; --card:#fff; --text:#111827; --muted:#6b7280;
+      --accent:#ff5722; --accent-2:#e91e63; --radius:14px; --shadow:0 8px 24px rgba(15,23,42,.08);
+    }
+    [data-theme="dark"]{
+      --bg:#071025; --card:#0b1220; --text:#e6eef8; --muted:#9aa6b8;
+      --accent:#ff6b3d; --accent-2:#e91e63; --shadow:0 10px 30px rgba(0,0,0,.45);
+    }
+
+    /* ---------- Base ---------- */
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;color:var(--text);background:var(--bg)}
+    a{color:inherit;text-decoration:none}
+    button{font:inherit}
+
+    /* ---------- Header ---------- */
+    header{position:sticky;top:0;z-index:20;background:linear-gradient(90deg,var(--accent),var(--accent-2));padding:12px 16px;color:#fff}
+    .bar{max-width:1100px;margin:0 auto;display:flex;gap:12px;align-items:center}
+    .logo{display:flex;gap:10px;align-items:center;font-weight:700}
+    .logo .mark{width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,.12);display:grid;place-items:center}
+    .grow{flex:1}
+    .search-wrap{max-width:560px;flex:1;position:relative}
+    .search-wrap input{width:100%;padding:10px 40px;border-radius:999px;border:0;outline:0;font-size:15px}
+    .search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;opacity:.6}
+
+    .theme-btn{background:rgba(255,255,255,.12);border:0;padding:8px 12px;border-radius:999px;color:#fff;cursor:pointer}
+
+    /* ---------- Filters ---------- */
+    .filters{max-width:1100px;margin:12px auto;padding:12px 16px;display:flex;gap:8px;flex-wrap:wrap}
+    .chip{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.12);color:#fff;border:1px solid #ffffff20;cursor:pointer;font-weight:600}
+    [data-theme="dark"] .chip{background:rgba(255,255,255,.06);border-color:#ffffff12}
+    .chip.active{background:#fff;color:var(--accent);box-shadow:var(--shadow)}
+
+    /* ---------- Grid ---------- */
+    main{max-width:1100px;margin:0 auto;padding:12px 16px 40px}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    @media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.grid{grid-template-columns:1fr}}
+
+    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;min-height:170px}
+    .card-head{display:flex;gap:12px;padding:16px}
+    .thumb{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:#fff;font-weight:800}
+    .title{font-weight:800;line-height:1.05}
+    .desc{padding:0 16px 12px;color:var(--muted);font-size:14px;min-height:40px}
+    .badges{padding:0 16px 12px;display:flex;gap:8px;flex-wrap:wrap}
+    .badge{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(0,0,0,.06);color:var(--muted)}
+    [data-theme="dark"] .badge{background:rgba(255,255,255,.04)}
+
+    .actions{display:flex;gap:10px;padding:12px 16px 16px;margin-top:auto}
+    .btn-view{flex:1;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:10px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+    .btn-download{flex:1;background:transparent;border:1px solid rgba(0,0,0,.06);border-radius:10px;padding:10px;color:var(--text);cursor:pointer;text-align:center}
+    [data-theme="dark"] .btn-download{border-color:rgba(255,255,255,.06)}
+
+    /* ---------- Modal viewer ---------- */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.6);z-index:40}
+    .modal.open{display:flex}
+    .sheet{width:95%;max-width:980px;height:88vh;background:var(--card);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+    .sheet-head{display:flex;align-items:center;padding:12px 14px;border-bottom:1px solid rgba(0,0,0,.04);gap:8px}
+    .sheet-title{font-weight:800}
+    .sheet-controls{margin-left:auto;display:flex;gap:8px}
+    .icon{background:transparent;border:0;color:var(--text);padding:8px;border-radius:8px;cursor:pointer}
+    .viewer{flex:1;background:#000;display:flex;align-items:center;justify-content:center}
+    .viewer iframe{width:100%;height:100%;border:0}
+
+    /* nav arrows */
+    .nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.35);border:0;color:#fff;padding:10px;border-radius:10px;cursor:pointer}
+    .nav-left{left:12px}.nav-right{right:12px}
+
+    /* accessibility */
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="bar">
+      <div class="logo">
+        <div class="mark" aria-hidden="true">K</div>
+        <div>
+          <div style="font-size:14px;opacity:.95;font-weight:800">Kotak Life</div>
+          <div style="font-size:12px;opacity:.9">PDF Library</div>
+        </div>
+      </div>
+
+      <div class="grow"></div>
+
+      <div class="search-wrap" aria-hidden="false">
+        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79L20 21.5 21.5 20l-6-6z"/></svg>
+        <input id="search" type="search" placeholder="Search plans, tags or descriptions…" aria-label="Search plans" />
+      </div>
+
+      <button id="themeToggle" class="theme-btn" title="Toggle theme">🌓</button>
+    </div>
+    <div id="filters" class="filters" aria-hidden="false"></div>
+  </header>
+
+  <!-- Grid -->
+  <main>
+    <section id="grid" class="grid" aria-live="polite"></section>
+  </main>
+
+  <!-- Modal PDF viewer -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-label="PDF viewer">
+    <div class="sheet" role="document">
+      <div class="sheet-head">
+        <div class="sheet-title" id="modalTitle">Viewing</div>
+        <div class="sheet-controls">
+          <button id="downloadBtn" class="icon" title="Download">⬇️</button>
+          <button id="shareBtn" class="icon" title="Share">📤</button>
+          <button id="closeBtn" class="icon" title="Close (Esc)">✖</button>
+        </div>
+      </div>
+      <div class="viewer" id="viewer">
+        <button class="nav-btn nav-left" id="prevBtn" title="Previous">◀</button>
+        <iframe id="frame" loading="lazy" title="PDF frame"></iframe>
+        <button class="nav-btn nav-right" id="nextBtn" title="Next">▶</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ---------------- Data: edit filenames or descriptions here ---------------- */
+    const PDFS = [
+      {title:'Kotak e-Term Plan', file:'kotak e-term plan.pdf', desc:'Affordable term insurance with flexible cover options.', tags:['term','protection']},
+      {title:'Kotak Signature Term Plan', file:'kotak signature term plan.pdf', desc:'Customizable term plan to protect your loved ones.', tags:['term','custom']},
+      {title:'Kotak Gen2Gen Plan', file:'kotak gen2gen plan.pdf', desc:'Legacy plan for inter-generational wealth transfer.', tags:['legacy','savings']},
+      {title:'Kotak Assured Savings Plan', file:'kotak assured savings plan.pdf', desc:'Guaranteed returns plus insurance.', tags:['savings','guaranteed']},
+      {title:'Kotak Guaranteed Fortune Builder', file:'kotak guaranteed fortune builder.pdf', desc:'Wealth-building plan with guaranteed payouts.', tags:['guaranteed','wealth']},
+      {title:'Kotak Fortune Maximiser', file:'kotak fortune maximiser.pdf', desc:'Investment-focused plan with long-term benefits.', tags:['investment','ulip']},
+      {title:'Kotak Assured Pension Plan', file:'Kotak Assured Pension plan.pdf', desc:'Retirement pension income solution.', tags:['pension','retirement']},
+      {title:'Kotak Smart Savings Plan', file:'kotak smart savings plan.pdf', desc:'Smart savings with life cover.', tags:['savings','smart']}
+    ];
+
+    /* ---------------- State & elements ---------------- */
+    const grid = document.getElementById('grid');
+    const filters = document.getElementById('filters');
+    const search = document.getElementById('search');
+    const modal = document.getElementById('modal');
+    const frame = document.getElementById('frame');
+    const modalTitle = document.getElementById('modalTitle');
+    const closeBtn = document.getElementById('closeBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const shareBtn = document.getElementById('shareBtn');
+    const themeToggle = document.getElementById('themeToggle');
+
+    let activeTags = new Set();
+    let currentIndex = 0;
+
+    /* ---------------- Theme ---------------- */
+    const saved = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', saved);
+    themeToggle.addEventListener('click', () => {
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+    });
+
+    /* ---------------- Filters ---------------- */
+    const allTags = Array.from(new Set(PDFS.flatMap(p=>p.tags))).sort();
+    function renderFilters(){
+      filters.innerHTML = '';
+      const allBtn = document.createElement('button');
+      allBtn.className = 'chip' + (activeTags.size===0 ? ' active' : '');
+      allBtn.textContent = 'All';
+      allBtn.onclick = ()=>{ activeTags.clear(); renderFilters(); renderGrid(); };
+      filters.appendChild(allBtn);
+      allTags.forEach(t=>{
+        const b = document.createElement('button');
+        b.className = 'chip' + (activeTags.has(t) ? ' active' : '');
+        b.textContent = t;
+        b.onclick = ()=>{
+          if(activeTags.has(t)) activeTags.delete(t); else activeTags.add(t);
+          renderFilters(); renderGrid();
+        };
+        filters.appendChild(b);
+      });
+    }
+
+    /* ---------------- Grid ---------------- */
+    function cardTemplate(item, idx){
+      const badges = item.tags.map(t=>`<span class="badge">${t}</span>`).join('');
+      return `
+        <article class="card" data-index="${idx}">
+          <div class="card-head">
+            <div class="thumb" aria-hidden="true">${item.title.split(' ')[0][0]||'K'}</div>
+            <div>
+              <div class="title">${item.title}</div>
+              <div style="font-size:13px;color:var(--muted)">${item.desc}</div>
+            </div>
+          </div>
+          <div class="badges">${badges}</div>
+          <div class="actions">
+            <button class="btn-view" data-idx="${idx}">View</button>
+            <a class="btn-download" href="${item.file}" download>Download</a>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderGrid(){
+      const q = search.value.trim().toLowerCase();
+      const match = it => {
+        const hay = (it.title + ' ' + it.desc + ' ' + it.tags.join(' ')).toLowerCase();
+        const tagOK = activeTags.size === 0 || it.tags.some(t=>activeTags.has(t));
+        return (!q || hay.includes(q)) && tagOK;
+      };
+      const items = PDFS.map((p,i)=>({p,i})).filter(({p})=>match(p));
+      grid.innerHTML = items.map(({p,i})=>cardTemplate(p,i)).join('');
+      // attach view listeners
+      grid.querySelectorAll('.btn-view').forEach(b=>{
+        b.addEventListener('click', ()=> openModal(Number(b.dataset.idx)));
+      });
+    }
+
+    /* ---------------- Modal ---------------- */
+    function openModal(idx){
+      currentIndex = idx;
+      const it = PDFS[idx];
+      modalTitle.textContent = it.title;
+      frame.src = it.file;
+      downloadBtn.onclick = ()=> { const a = document.createElement('a'); a.href = it.file; a.download=''; a.click(); };
+      shareBtn.onclick = async () => {
+        try {
+          if(navigator.share) await navigator.share({title:it.title, text: it.desc, url: it.file});
+          else alert('Share is not supported on this device.');
+        } catch(e){}
+      };
+      modal.classList.add('open');
+    }
+    function closeModal(){ modal.classList.remove('open'); frame.src=''; }
+    function next(){ openModal((currentIndex + 1) % PDFS.length); }
+    function prev(){ openModal((currentIndex - 1 + PDFS.length) % PDFS.length); }
+
+    // modal controls
+    closeBtn.addEventListener('click', closeModal);
+    nextBtn.addEventListener('click', next);
+    prevBtn.addEventListener('click', prev);
+    modal.addEventListener('click', (e)=> { if(e.target === modal) closeModal(); });
+    window.addEventListener('keydown', (e)=> {
+      if(!modal.classList.contains('open')) return;
+      if(e.key === 'Escape') closeModal();
+      if(e.key === 'ArrowRight') next();
+      if(e.key === 'ArrowLeft') prev();
+    });
+
+    // mobile swipe
+    (function(){
+      let sx=0, sy=0;
+      const viewer = document.getElementById('viewer');
+      viewer.addEventListener('touchstart', e=>{ sx=e.touches[0].clientX; sy=e.touches[0].clientY; }, {passive:true});
+      viewer.addEventListener('touchend', e=>{
+        const dx = e.changedTouches[0].clientX - sx;
+        const dy = Math.abs(e.changedTouches[0].clientY - sy);
+        if(Math.abs(dx) > 60 && dy < 40) dx < 0 ? next() : prev();
+      }, {passive:true});
+    })();
+
+    /* -------------- Search -------------- */
+    search.addEventListener('input', renderGrid);
+
+    /* -------------- Init -------------- */
+    renderFilters();
+    renderGrid();
+  </script>
+</body>
+</html>
